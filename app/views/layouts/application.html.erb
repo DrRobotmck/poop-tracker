@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PoopTrackerApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<h1>I pooped today.</h1>
+	<% unless logged_in? %>
+	<form id='login'>
+		<label for="">
+			username<br>
+			<input type="text" name='username' id='username'>
+		</label><br>
+		<label>
+			pin<br>
+		<input type="password" name='pin' id='pin'>
+		</label><br>
+		<button id='login-button'>login</button>
+	</form>
+<% end %>
+
+	<div id='poop-button' class="<%= logged_in? ? 'show' : 'hide'%>">
+	</div>
+
+<div id='stats'>
+<% if logged_in? %>
+	<h2><%= @user.username %> | total poops: <%= @user.poops.count %></h2>
+		<% @user.poops.each do |poop|%>
+			<% if poop.pooped %>
+				<li>Yup</li>
+			<% end %>
+		<% end %>
+	<% end %>
+</div>
+</body>
+</html>
